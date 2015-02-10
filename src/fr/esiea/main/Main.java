@@ -11,13 +11,21 @@ public class Main {
 		
 		OurLogger logger = LoggerFactory.getLogger(Main.class);
 
-		logger.d("blablabla1");
-		logger.e("blablablaaaa1");
+		logger.d("debug1");
+		logger.i("info1");
+		logger.e("error1");
+		
+		logger.setLevel(LoggerLevel.INFO);
+
+		logger.d("debug2");
+		logger.i("info2");
+		logger.e("error2");
 		
 		logger.setLevel(LoggerLevel.DEBUG);
-		
-		logger.d("blablabla");
-		logger.e("blablablaaaa");
+
+		logger.d("debug3");
+		logger.i("info3");
+		logger.e("error3");
 		
 
 		
