@@ -41,9 +41,25 @@ public class OurLogger {
 				" MESSAGE:"+pMessage+"]");
 		
 	}
+	
+	public String writeLog(LoggerLevel pLevel,String pMessage){
+		return "[NAME:"+name+
+				" LEVEL:"+pLevel.name()+
+				" MESSAGE:"+pMessage+"]";
+	}
 
 	public void setLevel(LoggerLevel pLevel) {
 		this.level = pLevel;
+	}
+	
+	public void setLevel(String valueLevel) {
+		LoggerLevel pLevel = LoggerLevel.valueOf(valueLevel);		
+		this.level = pLevel;
+	}
+	
+	public LoggerLevel getLevelFromValue(String valueLevel) {
+		LoggerLevel pLevel = LoggerLevel.valueOf(valueLevel);		
+		return pLevel;
 	}
 }
 
