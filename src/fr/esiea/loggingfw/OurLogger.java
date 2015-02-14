@@ -33,6 +33,16 @@ public class OurLogger {
 		}
 		
 	}
+
+	public void i(String pMessage) { info(pMessage); }
+	
+	public void info(String pMessage) {
+		
+		if(level.ordinal() <= LoggerLevel.INFO.ordinal()){
+			printLog(LoggerLevel.INFO,pMessage);
+		}
+		
+	}
 	
 	private void printLog(LoggerLevel pLevel,String pMessage) {
 		
