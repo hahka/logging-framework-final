@@ -20,10 +20,11 @@ public class WriteLoggerFile {
 			{
 				loggerFile.createNewFile();
 			}
-			FileWriter fw = new FileWriter(loggerFile.getAbsoluteFile());
+			FileWriter fw = new FileWriter(loggerFile.getAbsoluteFile(), true);
 			BufferedWriter bw = new BufferedWriter(fw);
 			bw.write(log);
 			bw.close();
+			
 			System.out.println("Log wrote");
 		}
 		catch(IOException e){

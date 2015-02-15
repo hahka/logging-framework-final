@@ -51,11 +51,14 @@ public class OurLogger {
 				" MESSAGE:"+pMessage+"]");
 		
 	}
-	
+	/* Return string of msg to write in file
+	 * @parameters LoggerLevel,String msg
+	 * @return String
+	 */
 	public String writeLog(LoggerLevel pLevel,String pMessage){
 		return "[NAME:"+name+
 				" LEVEL:"+pLevel.name()+
-				" MESSAGE:"+pMessage+"]";
+				" MESSAGE:"+pMessage+"]\n";
 	}
 
 	public void setLevel(LoggerLevel pLevel) {
