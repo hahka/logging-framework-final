@@ -15,20 +15,15 @@ public class Main {
 		// TODO Auto-generated method stub
 				
 		OurLogger logger = LoggerFactory.getLogger(Main.class);
-<<<<<<< HEAD
 		ReadPropertiesFile confProperty = new ReadPropertiesFile();
 		confProperty.readProperties();
 		Properties confFile = confProperty.config;
 		String levelFromFile = confFile.getProperty("level");
 		
-		logger.d("blablabla1");
-		logger.e("blablablaaaa1");
-=======
 
 		logger.d("debug1");
 		logger.i("info1");
 		logger.e("error1");
->>>>>>> c1d08d9b567c6921135e792ed42e599d38352c55
 		
 		logger.setLevel(LoggerLevel.INFO);
 

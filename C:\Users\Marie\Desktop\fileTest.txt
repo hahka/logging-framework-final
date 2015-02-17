@@ -1,0 +1,6 @@
+[NAME:fr.esiea.main.Main LEVEL:DEBUG MESSAGE:test hihihi]
+[NAME:fr.esiea.main.Main LEVEL:DEBUG MESSAGE:test hihihi]
+[NAME:fr.esiea.main.Main LEVEL:DEBUG MESSAGE:test hihihi]
+[NAME:fr.esiea.main.Main LEVEL:DEBUG MESSAGE:test hihihi]
+[NAME:fr.esiea.main.Main LEVEL:DEBUG MESSAGE:test hihihi]
+[NAME:fr.esiea.main.Main LEVEL:DEBUG MESSAGE:test hihihi]
