@@ -3,6 +3,12 @@ package fr.esiea.loggingfw;
 import fr.esiea.loggingfw.levels.LoggerLevel;
 
 public class OurLogger {
+	
+	/* TODO
+	 * Ajouter une cible qui utilisera probablement une factory
+	 * La fonction printlog utilisera cette cible et utilisera sa fonction print,
+	 * qui sera definit en abstract dans la classe abstract Target
+	 */
 
 	private String name;
 	private LoggerLevel level;

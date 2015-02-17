@@ -9,7 +9,9 @@ import java.util.Properties;
 public class WriteLoggerFile {
 
 	public void writeToLoggerFile(String log){		
-		String path = obtainLoggerFilePath();
+		//String path = obtainLoggerFilePath();
+		String path = getHomeFolderPath() + File.separator + "Documents" + File.separator + "file.txt";
+		System.out.println(path);
 		writeToLoggerFile(log, path);
 	}
 
@@ -39,6 +41,10 @@ public class WriteLoggerFile {
 		Properties confFile = confProperty.config;
 		return confFile.getProperty("loggerFilePath");
 
+	}
+
+	public String getHomeFolderPath(){
+		return System.getProperty("user.home");
 	}
 
 }

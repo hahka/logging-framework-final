@@ -1,5 +1,6 @@
 package fr.esiea.main;
 
+import java.io.File;
 import java.util.Properties;
 
 import fr.esiea.loggingfw.LoggerFactory;
@@ -10,9 +11,7 @@ import fr.esiea.loggingfw.levels.LoggerLevel;
 
 public class Main {
 
-
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 				
 		OurLogger logger = LoggerFactory.getLogger(Main.class);
 		ReadPropertiesFile confProperty = new ReadPropertiesFile();
@@ -43,8 +42,6 @@ public class Main {
 		
 		WriteLoggerFile wlg = new WriteLoggerFile();
 		wlg.writeToLoggerFile(logger.writeLog(LoggerLevel.DEBUG, "test hihihi"));
-		
-
 		
 	}
 
