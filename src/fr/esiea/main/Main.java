@@ -1,12 +1,10 @@
 package fr.esiea.main;
 
-import java.io.File;
 import java.util.Properties;
 
 import fr.esiea.loggingfw.LoggerFactory;
 import fr.esiea.loggingfw.ReadPropertiesFile;
 import fr.esiea.loggingfw.OurLogger;
-import fr.esiea.loggingfw.WriteLoggerFile;
 import fr.esiea.loggingfw.levels.LoggerLevel;
 
 public class Main {
