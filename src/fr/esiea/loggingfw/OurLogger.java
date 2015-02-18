@@ -1,5 +1,7 @@
 package fr.esiea.loggingfw;
 
+import fr.esiea.loggingfw.targets.AbstractTarget;
+import fr.esiea.loggingfw.targets.TargetFactory;
 import fr.esiea.loggingfw.levels.LoggerLevel;
 
 public class OurLogger {
@@ -12,11 +14,13 @@ public class OurLogger {
 
 	private String name;
 	private LoggerLevel level;
+	private AbstractTarget target;
 	
 	public OurLogger(String pName){
 		
 		this.name = pName;
 		this.level = LoggerLevel.ERROR;
+		this.target = TargetFactory.getTarget("console");
 		
 	}
 
