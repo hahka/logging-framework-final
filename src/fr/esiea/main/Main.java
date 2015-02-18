@@ -40,9 +40,6 @@ public class Main {
 		logger.d("blablabla");
 		logger.e("blablablaaaa");
 		
-		WriteLoggerFile wlg = new WriteLoggerFile();
-		wlg.writeToLoggerFile(logger.writeLog(LoggerLevel.DEBUG, "test hihihi"));
-		
 	}
 
 }

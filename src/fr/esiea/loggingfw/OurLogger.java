@@ -56,20 +56,10 @@ public class OurLogger {
 	
 	private void printLog(LoggerLevel pLevel,String pMessage) {
 		
-		System.out.println("[NAME:"+name+
-				" LEVEL:"+pLevel.name()+
-				" MESSAGE:"+pMessage+"]");
+		target.log(name, pLevel, pMessage);
 		
 	}
-	/* Return string of msg to write in file
-	 * @parameters LoggerLevel,String msg
-	 * @return String
-	 */
-	public String writeLog(LoggerLevel pLevel,String pMessage){
-		return "[NAME:"+name+
-				" LEVEL:"+pLevel.name()+
-				" MESSAGE:"+pMessage+"]\n";
-	}
+
 
 	public void setLevel(LoggerLevel pLevel) {
 		this.level = pLevel;
@@ -83,6 +73,10 @@ public class OurLogger {
 	public LoggerLevel getLevelFromValue(String valueLevel) {
 		LoggerLevel pLevel = LoggerLevel.valueOf(valueLevel);		
 		return pLevel;
+	}
+	
+	public void setTarget(String pTarget){
+		this.target = TargetFactory.getTarget(pTarget);
 	}
 }
 

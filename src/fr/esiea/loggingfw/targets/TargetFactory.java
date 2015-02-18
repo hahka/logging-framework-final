@@ -8,24 +8,14 @@ public final class TargetFactory {
     {
         AbstractTarget target;
 
-		switch(param){
-			
-			case "console":
-				target = new ConsoleTarget();
-				break;
-				
-			case "file":
-				target = new ConsoleTarget();
-				break;
-				
-			case "bdd":
-				target = new ConsoleTarget();
-				break;
-				
-			default:target = new ConsoleTarget();
-				break;
-			
+		if(param.equals("console")){
+			target = new ConsoleTarget();
+		} else if(param.equals("file")){
+			target = new FileTarget();
+		} else {
+			target = new ConsoleTarget();
 		}
+		
         return target;
     }
 }
