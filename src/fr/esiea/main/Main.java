@@ -17,9 +17,12 @@ public class Main {
 		Properties confFile = confProperty.config;
 		String levelFromFile = confFile.getProperty("level");
 		
+		logger.setLevel(LoggerLevel.DEBUG);
+		logger.setTarget("jdbc");
+		
 
 		logger.d("debug1");
-		logger.i("info1");
+		/*logger.i("info1");
 		logger.e("error1");
 		
 		logger.setLevel(LoggerLevel.INFO);
@@ -36,7 +39,7 @@ public class Main {
 		
 		logger.setLevel(levelFromFile);
 		logger.d("blablabla");
-		logger.e("blablablaaaa");
+		logger.e("blablablaaaa");*/
 		
 	}
 
