@@ -78,5 +78,9 @@ public class OurLogger {
 	public void setTarget(String pTarget){
 		this.target = TargetFactory.getTarget(pTarget);
 	}
+	
+	public void setTarget(AbstractTarget pTarget){
+		this.target = pTarget;
+	}
 }
 

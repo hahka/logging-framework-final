@@ -13,155 +13,175 @@ import java.sql.*;
 import java.util.Properties;
 
 public class JdbcTarget extends AbstractTarget {
-	
-	public JdbcTarget(){
+
+	private String SGBD;
+	private String JDBC_DRIVER;
+	private String DB_URL;
+	private String USER;
+	private String PASS;
+
+	public JdbcTarget() {
 		super();
-		
+
 		OurLogger logger = LoggerFactory.getLogger(JdbcTarget.class);
 		logger.setLevel(LoggerLevel.DEBUG);
-		
-		if(createDatabase("log"))
-			logger.d("log possible");
-	}
-	
 
-	public static boolean tableExists(Connection connection, String nomTable) throws SQLException{
-		boolean existe;
-		DatabaseMetaData dmd = connection.getMetaData();
-		ResultSet tables = dmd.getTables(connection.getCatalog(),null,nomTable,null);
-		existe = tables.next();
-		tables.close();
-		return existe;	
+		SGBD = "postgresql";
+		JDBC_DRIVER = JdbcDrivers.getDriver("postgresql");
+		DB_URL = "jdbc:postgresql://postgresql.alwaysdata.com:5432/hahka_logging_framework_db";
+		USER = "hahka_logging_framework_user";
+		PASS = "esiea@15";
 	}
-	
-	
-	public boolean createDatabase(String databaseName){
+
+	public JdbcTarget(String pSgbd, String pDbUrl, String pUsername,
+			String pPassword) {
+		super();
+
+		OurLogger logger = LoggerFactory.getLogger(JdbcTarget.class);
+		logger.setLevel(LoggerLevel.DEBUG);
+
+		SGBD = pSgbd;
+		JDBC_DRIVER = JdbcDrivers.getDriver(pSgbd);
+		DB_URL = pDbUrl;
+		USER = pUsername;
+		PASS = pPassword;
 		
+	}
+
+
+	public boolean createDatabase(String databaseName) {
+
 		boolean result = false;
-		String JDBC_DRIVER = "org.postgresql.Driver";  
-		String DB_URL = "jdbc:postgresql://localhost/";
 
-		   //  Database credentials
-		   String USER = "thibautvirolle";
-		   String PASS = "";
-		   
-		   Connection conn = null;
-		   Statement stmt = null;
-		   try{
-		      //STEP 2: Enregistrer le driver JDBC
-		      Class.forName(JDBC_DRIVER);
+		// Database credentials
 
-		      //STEP 3: Ouvrir une connexion
-		      System.out.println("Connexion au SGBD...");
-		      conn = DriverManager.getConnection(DB_URL, USER, PASS);
+		Connection conn = null;
+		Statement stmt = null;
+		try {
+			// STEP 2: Enregistrer le driver JDBC
+			Class.forName(JDBC_DRIVER);
 
-		      //STEP 4: Exécuter une requète
-		      System.out.println("Création de la base de données...");
-		      stmt = conn.createStatement();
-		      
-		      String sql = "CREATE DATABASE "+databaseName;
-		      stmt.executeUpdate(sql);
+			// STEP 3: Ouvrir une connexion
+			System.out.println("Connexion au SGBD...");
+			conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
-		      System.out.println("Base de données créée avec succès...");
-		      result = true;
-		   }catch(SQLException se){
-		      //Catch des erreurs JDBC
-			   String errorCode = se.getSQLState();
-			   if(errorCode.equals(ErrorCodes.DUPLICATE_DATABASE)){
-				   System.out.println("La base de données existe déjà.");
-				   result = true;
-			   } else {
-				   System.out.println(errorCode + " : " + se.getMessage());
-				   //se.printStackTrace();
-			   }
-				   
+			// STEP 4: Exécuter une requète
+			System.out.println("Création de la base de données...");
+			stmt = conn.createStatement();
 
-		   }catch(Exception e){
-		      //Catch des erreurs Class.forName
-		      e.printStackTrace();
-		   }finally{
-		      // Le bloc try a réussi, on freme les ressources 
-		      try{
-		         if(stmt!=null) stmt.close();
-		      }catch(SQLException se2){
-		    	  se2.printStackTrace();
-		      }
-		      try{
-		         if(conn!=null) conn.close();
-		      }catch(SQLException se){
-		         se.printStackTrace();
-		      }
-		   }
-		   
-		   return result;
+			String sql = "CREATE DATABASE " + databaseName;
+			stmt.executeUpdate(sql);
+
+			System.out.println("Base de données créée avec succès...");
+			result = true;
+		} catch (SQLException se) {
+			// Catch des erreurs JDBC
+			String errorCode = se.getSQLState();
+			if (errorCode.equals(ErrorCodes.DUPLICATE_DATABASE)) {
+				System.out.println("La base de données existe déjà.");
+				result = true;
+			} else {
+				System.out.println(errorCode + " : " + se.getMessage());
+				// se.printStackTrace();
+			}
+
+		} catch (Exception e) {
+			// Catch des erreurs Class.forName
+			e.printStackTrace();
+		} finally {
+			// Le bloc try a réussi, on freme les ressources
+			try {
+				if (stmt != null)
+					stmt.close();
+			} catch (SQLException se2) {
+				se2.printStackTrace();
+			}
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException se) {
+				se.printStackTrace();
+			}
+		}
+
+		return result;
 	}
-	
+
 	@Override
 	public void log(String pName, LoggerLevel level, String message) {
 		// TODO Auto-generated method stub
-		
-		//createDatabase("test");
-		/*String url = "jdbc:postgresql://localhost/";
-		Properties props = new Properties();
-		props.setProperty("user","thibautvirolle");
-		props.setProperty("password","secret");
-		props.setProperty("ssl","true");
+
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
 		try {
-			Connection conn = DriverManager.getConnection(url, props);
+			if(JdbcQuerys.tableExists(this.getConnection(), "log"))
+				JdbcQuerys.executeUpdate(this, "INSERT INTO log "
+						+ "(message, source) "
+						+ "VALUES ('"+message+"', '"+pName+"');");
+
+			conn = this.getConnection();
+			stmt = conn.createStatement();
+			
+			rs = stmt.executeQuery("SELECT * FROM log;");
+			
+	        while (rs.next()) {
+	            String coffeeName = rs.getString("MESSAGE");
+	            String supplierID = rs.getString("SOURCE");
+	            System.out.println(coffeeName + "\t" + supplierID);
+	        }
+			
+				
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
-		
-		/*String connectionURL = "jdbc:postgresql://localhost:5432/movies;user=java;password=samples";
-		// Change the connection string according to your db, ip, username and password
-		
-		try {
-			 
-		    // Load the Driver class. 
-		    Class.forName("org.postgresql.Driver");
-		    // If you are using any other database then load the right driver here.
-		 
-		    //Create the connection using the static getConnection method
-		    //Connection con = DriverManager.getConnection (connectionURL);
-		    Connection con = getConnection();
-		 
-		    //Create a Statement class to execute the SQL statement
-		    Statement stmt = con.createStatement();
-		 
-		    //Execute the SQL statement and get the results in a Resultset
-		    ResultSet rs = stmt.executeQuery("select moviename, releasedate from movies");
-		 
-		    // Iterate through the ResultSet, displaying two values
-		    // for each row using the getString method
-		 
-		    while (rs.next())
-		        System.out.println("Name= " + rs.getString("moviename") + " Date= " + rs.getString("releasedate"));
-		    
-		    con.close();
+		} finally {
+			// Le bloc try a réussi, on freme les ressources
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (SQLException se) { se.printStackTrace(); }
+			try {
+				if (stmt != null)
+					stmt.close();
+			} catch (SQLException se) { se.printStackTrace(); }
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException se) { se.printStackTrace(); }
 		}
-		catch (SQLException e) {
-		    e.printStackTrace();
-		}
-		catch (Exception e) {
-		    e.printStackTrace();
-		}
-		finally {
-		    // Close the connection
-		    //con.close();
-		}*/
 		
 	}
+
+
+	public void createLogTable(String pName, LoggerLevel level, String message) {
+		// TODO Auto-generated method stub
+
+		try {
+			if(!JdbcQuerys.tableExists(this.getConnection(), "log"))
+				JdbcQuerys.executeUpdate(this, "CREATE SEQUENCE LogsSequence;");
+
+			if(!JdbcQuerys.tableExists(this.getConnection(), "log"))
+				JdbcQuerys.executeUpdate(this, "CREATE TABLE LOG "
+					+ "(id INT NOT NULL DEFAULT nextval('LogsSequence') PRIMARY KEY ,"
+					+ "message VARCHAR(100),"
+					+ "source VARCHAR(100));");
+			
+				
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
 	
+	public Connection getConnection() throws SQLException {
 
-	/*private static Connection getConnection() throws URISyntaxException, SQLException {
-	    URI dbUri = new URI("postgres://brgrspdyczzxep:B_SFAFvSib-ztnfR4hej5JiZgA@ec2-54-195-241-57.eu-west-1.compute.amazonaws.com:5432/ddrip20p99rq2a");
-
-	    String username = dbUri.getUserInfo().split(":")[0];
-	    String password = dbUri.getUserInfo().split(":")[1];
-	    String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
-
-	    return DriverManager.getConnection(dbUrl, username, password);
-	}*/
+	    Connection conn = null;
+	    conn = DriverManager.getConnection(DB_URL, USER, PASS);
+	    System.out.println("Connecté à la base de données");
+	    return conn;
+	}
 
 }
