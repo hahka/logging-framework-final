@@ -59,7 +59,7 @@ public class JdbcQuerys {
 	}
 
 
-	public static ResultSet executeQuery(JdbcTarget target, String query) {
+	/*public static ResultSet executeQuery(JdbcTarget target, String query) {
 
 		Connection conn = null;
 		Statement stmt = null;
@@ -93,6 +93,6 @@ public class JdbcQuerys {
 		}
 
 		return rs;
-	}
+	}*/
 
 }

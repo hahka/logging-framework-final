@@ -7,6 +7,8 @@ import fr.esiea.loggingfw.ReadPropertiesFile;
 import fr.esiea.loggingfw.OurLogger;
 import fr.esiea.loggingfw.levels.LoggerLevel;
 import fr.esiea.loggingfw.targets.jdbc.JdbcTarget;
+import fr.esiea.loggingfw.targets.jdbc.sgbd.MysqlTarget;
+import fr.esiea.loggingfw.targets.jdbc.sgbd.PostgresqlTarget;
 
 public class Main {
 
@@ -18,21 +20,21 @@ public class Main {
 		Properties confFile = confProperty.config;
 		String levelFromFile = confFile.getProperty("level");
 		
-		logger.setLevel(LoggerLevel.DEBUG);
+		logger.setLevel(LoggerLevel.ERROR);
 		//logger.setTarget("jdbc");
 
-		logger.setTarget(new JdbcTarget("postgresql",
+		/*logger.setTarget(new PostgresqlTarget("postgresql",
 										"jdbc:postgresql://postgresql.alwaysdata.com:5432/hahka_logging_framework_db",
 										"hahka",
-										"23tivi03"));
+										"23tivi03"));*/
 
-		/*logger.setTarget(new JdbcTarget("mysql",
+		logger.setTarget(new MysqlTarget("mysql",
 										"jdbc:mysql://mysql.alwaysdata.com:3306/hahka_logging_framework_db",
 										"hahka",
-										"23tivi03"));*/
+										"23tivi03"));
 		
 
-		logger.d("debug1");
+		logger.e("debug1");
 		/*logger.i("info1");
 		logger.e("error1");
 		
