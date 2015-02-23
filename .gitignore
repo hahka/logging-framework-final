@@ -1,4 +1,5 @@
 *.class
+src/fr/esiea/main/Main.java
 
 *~
 *.lock
