@@ -21,20 +21,20 @@ public class JdbcTarget extends AbstractTarget {
 	public JdbcTarget() {
 		super();
 
-		JDBC_DRIVER = JdbcDrivers.getDriver("postgresql");
+		JDBC_DRIVER = "org.postgresql.Driver";
 		DB_URL = "jdbc:postgresql://postgresql.alwaysdata.com:5432/hahka_logging_framework_db";
 		USER = "hahka_logging_framework_user";
 		PASS = "esiea@15";
 	}
 
-	public JdbcTarget(String pSgbd, String pDbUrl, String pUsername,
+	public JdbcTarget(String pSgbdDriver, String pDbUrl, String pUsername,
 			String pPassword) {
 		super();
 
 		OurLogger logger = LoggerFactory.getLogger(JdbcTarget.class);
 		logger.setLevel(LoggerLevel.DEBUG);
 
-		JDBC_DRIVER = JdbcDrivers.getDriver(pSgbd);
+		JDBC_DRIVER = pSgbdDriver;
 		DB_URL = pDbUrl;
 		USER = pUsername;
 		PASS = pPassword;
@@ -71,7 +71,7 @@ public class JdbcTarget extends AbstractTarget {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			// Le bloc try a réussi, on freme les ressources
+			// Le bloc try a réussi, on ferme les ressources
 			try {
 				if (rs != null)
 					rs.close();
@@ -89,9 +89,15 @@ public class JdbcTarget extends AbstractTarget {
 	}
 
 
-	public Connection getConnection() throws SQLException{
+	public Connection getConnection(){
+		
 		Connection conn = null;
-	    conn = DriverManager.getConnection(DB_URL, USER, PASS);
+	    try {
+			conn = DriverManager.getConnection(DB_URL, USER, PASS);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
+		}
 	    return conn;
 	};
 

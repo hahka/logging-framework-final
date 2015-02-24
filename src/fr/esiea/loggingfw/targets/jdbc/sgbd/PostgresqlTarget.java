@@ -17,10 +17,9 @@ public class PostgresqlTarget extends JdbcTarget{
 	public void createLogTable() {
 		
 		try {
-			JdbcQuerys.executeUpdate(this, "DROP TABLE log;");
 			
 			if(!JdbcQuerys.tableExists(this.getConnection(), "log"))
-				JdbcQuerys.executeUpdate(this, "CREATE SEQUENCE LogsSequence;");
+				JdbcQuerys.executeUpdate(this, "CREATE SEQUENCE logs_sequence;");
 
 			if(!JdbcQuerys.tableExists(this.getConnection(), "log"))
 				JdbcQuerys.executeUpdate(this, "CREATE TABLE log "
@@ -33,6 +32,20 @@ public class PostgresqlTarget extends JdbcTarget{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+	}
+	
+	public void resetDatabase() {
+		
+		try {
+			if(!JdbcQuerys.tableExists(this.getConnection(), "log"))
+				JdbcQuerys.executeUpdate(this, "DROP TABLE log;");
+			JdbcQuerys.executeUpdate(this, "DROP SEQUENCE logs_sequence;");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 	}
 
