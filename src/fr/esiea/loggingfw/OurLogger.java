@@ -1,5 +1,7 @@
 package fr.esiea.loggingfw;
 
+import java.util.ArrayList;
+
 import fr.esiea.loggingfw.targets.AbstractTarget;
 import fr.esiea.loggingfw.targets.TargetFactory;
 import fr.esiea.loggingfw.levels.LoggerLevel;
@@ -14,13 +16,22 @@ public class OurLogger {
 
 	private String name;
 	private LoggerLevel level;
-	private AbstractTarget target;
-	
+	private ArrayList<AbstractTarget> target;
+
 	public OurLogger(String pName){
 		
 		this.name = pName;
 		this.level = LoggerLevel.ERROR;
-		this.target = TargetFactory.getTarget("console");
+		this.target = new ArrayList<AbstractTarget>();
+		this.target.add(TargetFactory.getTarget("console"));
+		
+	}
+	public OurLogger(Class pClass){
+		
+		this.name = pClass.getCanonicalName();
+		this.level = LoggerLevel.ERROR;
+		this.target = new ArrayList<AbstractTarget>();
+		this.target.add(TargetFactory.getTarget("console"));
 		
 	}
 
@@ -56,10 +67,13 @@ public class OurLogger {
 	
 	private void printLog(LoggerLevel pLevel,String pMessage) {
 		
-		target.log(name, pLevel, pMessage);
+		for(AbstractTarget t : target){
+			t.log(name, pLevel, pMessage);
+		}
+		
 		
 	}
-
+	
 
 	public void setLevel(LoggerLevel pLevel) {
 		this.level = pLevel;
@@ -76,11 +90,22 @@ public class OurLogger {
 	}
 	
 	public void setTarget(String pTarget){
-		this.target = TargetFactory.getTarget(pTarget);
+		this.target = new ArrayList<AbstractTarget>();
+		this.target.add(TargetFactory.getTarget(pTarget));
 	}
 	
 	public void setTarget(AbstractTarget pTarget){
-		this.target = pTarget;
+		this.target = new ArrayList<AbstractTarget>();
+		this.target.add(pTarget);
 	}
+	
+	public void addTarget(AbstractTarget pTarget){
+		this.target.add(pTarget);
+	}
+	
+	public void removeTarget(AbstractTarget pTarget){
+		this.target.remove(pTarget);
+	}
+
 }
 

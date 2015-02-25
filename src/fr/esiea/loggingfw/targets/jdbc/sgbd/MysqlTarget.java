@@ -9,8 +9,6 @@ public class MysqlTarget extends JdbcTarget{
 
 	public MysqlTarget(String pSgbd, String pDbUrl, String pUser, String pPass){
 		super(pSgbd, pDbUrl, pUser, pPass);
-		
-		createLogTable();
 	}
 	
 
@@ -38,10 +36,7 @@ public class MysqlTarget extends JdbcTarget{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		
+		}	
 	}
-
-
 	
 }

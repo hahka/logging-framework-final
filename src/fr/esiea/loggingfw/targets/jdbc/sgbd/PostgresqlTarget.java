@@ -42,10 +42,8 @@ public class PostgresqlTarget extends JdbcTarget{
 				JdbcQuerys.executeUpdate(this, "DROP TABLE log;");
 			JdbcQuerys.executeUpdate(this, "DROP SEQUENCE logs_sequence;");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		
 	}
 
