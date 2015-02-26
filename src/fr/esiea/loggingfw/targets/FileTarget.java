@@ -5,17 +5,23 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Properties;
+
 import fr.esiea.loggingfw.ReadPropertiesFile;
+import fr.esiea.loggingfw.format.LoggerFormatter;
 import fr.esiea.loggingfw.levels.LoggerLevel;
 
 public class FileTarget extends AbstractTarget {
 
-	@Override
 	public void log(String pName, LoggerLevel level, String message) {
-		// TODO Auto-generated method stub
 		writeToLoggerFile(printLog(pName, level, message), null);
 	}
 
+	@Override
+	public void log(String pName, LoggerLevel level, String message,
+			LoggerFormatter formatter) {
+		writeToLoggerFile(printLog(pName, level, message), null);
+	}
+	
 	private String printLog(String pName, LoggerLevel level, String message){
 		return "[NAME:"+pName+
 				" LEVEL:"+level.name()+
@@ -63,6 +69,7 @@ public class FileTarget extends AbstractTarget {
 	public String getHomeFolderPath(){
 		return System.getProperty("user.home");
 	}
+
 
 
 }

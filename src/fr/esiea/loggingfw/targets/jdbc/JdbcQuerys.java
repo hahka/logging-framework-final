@@ -8,13 +8,11 @@ import java.sql.Statement;
 
 public class JdbcQuerys {
 
-	public static boolean executeUpdate(JdbcTarget target, String query) {
+	public static boolean executeUpdate(Connection conn, String query) {
 
 		boolean result = false;
-		Connection conn = null;
 		Statement stmt = null;
 		try {
-			conn = target.getConnection();
 			stmt = conn.createStatement();
 			stmt.executeUpdate(query);
 			result = true;
@@ -33,12 +31,6 @@ public class JdbcQuerys {
 					stmt.close();
 			} catch (SQLException se2) {
 				se2.printStackTrace();
-			}
-			try {
-				if (conn != null)
-					conn.close();
-			} catch (SQLException se) {
-				se.printStackTrace();
 			}
 		}
 

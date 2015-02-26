@@ -5,24 +5,28 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Properties;
 
+import fr.esiea.loggingfw.ReadPropertiesFile;
+import fr.esiea.loggingfw.format.LoggerFormatter;
 import fr.esiea.loggingfw.levels.LoggerLevel;
+import fr.esiea.loggingfw.log.Log;
 import fr.esiea.loggingfw.targets.AbstractTarget;
 
-public class JdbcTarget extends AbstractTarget {
-
-	protected String JDBC_DRIVER = null;
-	protected String DB_URL = null;
-	protected String USER = null;
-	protected String PASS = null;
+public class JdbcTarget extends AbstractJdbcTarget {
 
 	public JdbcTarget() {
 		super();
 
-		/*JDBC_DRIVER = "org.postgresql.Driver";
-		DB_URL = "jdbc:postgresql://postgresql.alwaysdata.com:5432/hahka_logging_framework_db";
-		USER = "hahka_logging_framework_user";
-		PASS = "esiea@15";*/
+		ReadPropertiesFile confProperty = new ReadPropertiesFile();
+		confProperty.readProperties();
+		Properties confFile = confProperty.config;
+		JDBC_DRIVER = confFile.getProperty("jdbc_driver");
+		DB_URL = confFile.getProperty("db_url");
+		USER = confFile.getProperty("user");
+		PASS = confFile.getProperty("pass");
+
 	}
 
 	public JdbcTarget(String pSgbdDriver, String pDbUrl, String pUsername,
@@ -38,11 +42,11 @@ public class JdbcTarget extends AbstractTarget {
 
 	// Log en base de donnée
 	@Override
-	public void log(String pName, LoggerLevel pLevel, String pMessage) {
+	public void log(String pName, LoggerLevel pLevel, String pMessage, LoggerFormatter pFormatter) {
 
 		try {
 			if(JdbcQuerys.tableExists(this.getConnection(), "log"))
-				JdbcQuerys.executeUpdate(this, "INSERT INTO log "
+				JdbcQuerys.executeUpdate(this.getConnection(), "INSERT INTO log "
 						+ "(message, source, level) "
 						+ "VALUES ('"+pMessage+"', '"+pName+"', "+pLevel.ordinal()+");");
 				
@@ -53,8 +57,11 @@ public class JdbcTarget extends AbstractTarget {
 	}
 	
 	// Récupération des logs insérés en base de donnée
-	public void getLogs(){
-		// Ressources néces
+	@Override
+	public ArrayList<Log> getLogs(){
+		
+		ArrayList<Log> logs = new ArrayList<Log>();
+		// Ressources nécessaires pour effectuer une requête SQL
 		Connection conn = null;
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -68,8 +75,9 @@ public class JdbcTarget extends AbstractTarget {
 	        while (rs.next()) {
 	            String message = rs.getString("MESSAGE");
 	            String source = rs.getString("SOURCE");
+	            int level = rs.getInt("LEVEL");
 	            String date = rs.getString("DATE");
-	            System.out.println(source + "\t" + message + "\t" + date);
+	            logs.add(new Log(source, LoggerLevel.values()[level], message, date));
 	        }
 			
 		} catch (SQLException e) {
@@ -89,27 +97,12 @@ public class JdbcTarget extends AbstractTarget {
 					conn.close();
 			} catch (SQLException se) { se.printStackTrace(); }
 		}
+		
+		return logs;
+
 	}
 
 	
-	// Getters et Setters classiques
-	public String getJdbcDriver() { return JDBC_DRIVER; }
-
-	public void setJdbcDriver(String pJjdbcDriver) { JDBC_DRIVER = pJjdbcDriver; }
-
-	public String getDbUrl() { return DB_URL; }
-
-	public void setDbUrl(String pDbUrl) { DB_URL = pDbUrl; }
-
-	public String getUser() { return USER; }
-
-	public void setUser(String pUser) { USER = pUser; }
-
-	public String getPass() { return PASS; }
-
-	public void setPass(String pPass) { PASS = pPass; }
-
-
 	// 
 	public Connection getConnection() throws SQLException{
 		
@@ -117,7 +110,6 @@ public class JdbcTarget extends AbstractTarget {
 	    try {
 			conn = DriverManager.getConnection(DB_URL, USER, PASS);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			throw e;
 		}
 	    return conn;
