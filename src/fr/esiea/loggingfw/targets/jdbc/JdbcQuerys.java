@@ -8,6 +8,12 @@ import java.sql.Statement;
 
 public class JdbcQuerys {
 
+	/**
+	 * Exécute une mise à jour sur une table (exemple : ajout de table, insertion de données...)
+	 * @param conn : la connexion à la base de donnée
+	 * @param query : la requète que l'on souhaite effectuer
+	 * @return true si la requête a réussi, false sinon
+	 */
 	public static boolean executeUpdate(Connection conn, String query) {
 
 		boolean result = false;
@@ -37,7 +43,12 @@ public class JdbcQuerys {
 		return result;
 	}
 	
-
+	/**
+	 * @param connection : la connexion à la base de donnée
+	 * @param nomTable : le nom de la table dont on vérifie l'existence 
+	 * @return true si la table existe, false sinon
+	 * @throws SQLException
+	 */
 	public static boolean tableExists(Connection connection, String nomTable)
 			throws SQLException {
 		boolean existe;
@@ -48,42 +59,5 @@ public class JdbcQuerys {
 		tables.close();
 		return existe;
 	}
-
-
-	/*public static ResultSet executeQuery(JdbcTarget target, String query) {
-
-		Connection conn = null;
-		Statement stmt = null;
-		ResultSet rs = null;
-		try {
-			conn = target.getConnection();
-			stmt = conn.createStatement();
-			rs = stmt.executeQuery(query);
-		} catch (SQLException se) {
-			// Catch des erreurs JDBC
-			String errorCode = se.getSQLState();
-			System.out.println(errorCode + " : " + se.getMessage());
-
-		} catch (Exception e) {
-			// Catch des erreurs Class.forName
-			e.printStackTrace();
-		} finally {
-			// Le bloc try a réussi, on freme les ressources
-			try {
-				if (stmt != null)
-					stmt.close();
-			} catch (SQLException se2) {
-				se2.printStackTrace();
-			}
-			try {
-				if (conn != null)
-					conn.close();
-			} catch (SQLException se) {
-				se.printStackTrace();
-			}
-		}
-
-		return rs;
-	}*/
 
 }

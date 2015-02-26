@@ -8,13 +8,14 @@ import fr.esiea.loggingfw.format.LoggerFormatter;
 import fr.esiea.loggingfw.levels.LoggerLevel;
 
 
-/*
+/**
  * Classe OurLogger
  * Classe principale du logger
  * params:
  * 	name : pour différencier les différents logs. Généralement la source du log
  * 	level : le niveau de log (debug, error...)
  * 	target : la liste des cibles on va vouloir logger
+ * 	formatter : formatter utilisé pour mettre en forme les logs
  */
 public class OurLogger {
 	
@@ -43,9 +44,6 @@ public class OurLogger {
 		
 	}
 
-	/*
-	 * Fonctions de debug
-	 */
 	public void d(String pMessage) { debug(pMessage); }
 	
 	public void debug(String pMessage) {
@@ -54,9 +52,6 @@ public class OurLogger {
 		}
 	}
 
-	/*
-	 * Fonctions d'erreur
-	 */
 	public void e(String pMessage) { error(pMessage); }
 	
 	public void error(String pMessage) {
@@ -65,9 +60,6 @@ public class OurLogger {
 		}
 	}
 
-	/*
-	 * Fonctions d'info
-	 */
 	public void i(String pMessage) { info(pMessage); }
 	
 	public void info(String pMessage) {
@@ -76,54 +68,89 @@ public class OurLogger {
 		}
 	}
 	
-	/*
-	 * Fonction qui effectuera le log dans les différentes cibles du logger
+	/**
+	 * Effectue les logs dans les différentes cibles du logger
+	 * @param pLevel : niveau de priorité du log
+	 * @param pMessage : message à logger
 	 */
 	private void printLog(LoggerLevel pLevel,String pMessage) {
-		
 		for(AbstractTarget t : target){
 			t.log(name, pLevel, pMessage, formatter);
 		}
-		
 	}
 	
 
-	/*
-	 * Getters et setters pour le niveau de log
+	
+	/**
+	 * @param pLevel : niveau de priorité du logger
 	 */
 	public void setLevel(LoggerLevel pLevel) {
 		this.level = pLevel;
 	}
 	
+	/**
+	 * @param valueLevel : String correspondant au niveau de priorité du logger
+	 */
 	public void setLevel(String valueLevel) {
 		LoggerLevel pLevel = LoggerLevel.valueOf(valueLevel);		
 		this.level = pLevel;
 	}
+	
 	
 	public LoggerLevel getLevelFromValue(String valueLevel) {
 		LoggerLevel pLevel = LoggerLevel.valueOf(valueLevel);		
 		return pLevel;
 	}
 	
-	/*
-	 * Fonctions pour ajouter des cibles ou n'en définir qu'une seule
+	/**
+	 * @param pTarget : String utilisée par TargetFactory pour retrouver la cible correspondant 
 	 */
 	public void setTarget(String pTarget){
 		this.target = new ArrayList<AbstractTarget>();
 		this.target.add(TargetFactory.getTarget(pTarget));
 	}
 	
+	/**
+	 * @param pTarget : cible (AbstractTarget) pour le logger
+	 */
 	public void setTarget(AbstractTarget pTarget){
 		this.target = new ArrayList<AbstractTarget>();
 		this.target.add(pTarget);
 	}
 	
+	/**
+	 * Ajout d'une cible seulement si elle n'est pas déjà présente
+	 * Utilise les .equals surchargés pour tester la présence
+	 * @param pTarget : AstractTarget à ajouter au logger
+	 */
 	public void addTarget(AbstractTarget pTarget){
-		this.target.add(pTarget);
+		if(! this.target.contains(pTarget))
+			this.target.add(pTarget);
+	}
+
+	/**
+	 * Ajout d'une cible seulement si elle n'est pas déjà présente
+	 * Utilise les .equals surchargés pour tester la présence
+	 * @param pTarget : String utilisée par le TargetFactory pour ajouter au logger une cible
+	 */
+	public void addTarget(String pTarget){
+		AbstractTarget target = TargetFactory.getTarget(pTarget);
+		if(! this.target.contains(target))
+			this.target.add(target);
 	}
 	
+	/**
+	 * Enlève toutes les cibles associées
+	 */
 	public void removeTargets(){
 		this.target = new ArrayList<AbstractTarget>();
+	}
+	
+	/**
+	 * Enlève la cible passée en paramètre
+	 */
+	public void removeTarget(AbstractTarget target){
+		this.target.remove(target);
 	}
 
 }

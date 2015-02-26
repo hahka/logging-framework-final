@@ -27,11 +27,12 @@ public abstract class AbstractJdbcTarget extends AbstractTarget {
 	protected String PASS = null;
 
 	
-	// Récupération des logs insérés en base de donnée
+	/**
+	 * @return La liste des logs inscrits en base de données 
+	 */
 	public abstract ArrayList<Log> getLogs();
 
 	
-	// Getters et Setters classiques
 	public String getJdbcDriver() { return JDBC_DRIVER; }
 
 	public void setJdbcDriver(String pJjdbcDriver) { JDBC_DRIVER = pJjdbcDriver; }
@@ -48,11 +49,11 @@ public abstract class AbstractJdbcTarget extends AbstractTarget {
 
 	public void setPass(String pPass) { PASS = pPass; }
 
-
-	/* 
-	 * Fonction appelée avant chaque requête.
-	 * Crée une connection avec le sgbd.
-	 * A fermer une fois la requête exécutée.
+	/**
+	 * Fonction appelée avant charque requète.
+	 * A fermer une fois la requète exécutée.
+	 * @return La connexion avec le sgbd
+	 * @throws SQLException : l'un des paramètres est null, il manque le mot de passe, etc...
 	 */
 	public Connection getConnection() throws SQLException{
 		
@@ -63,6 +64,58 @@ public abstract class AbstractJdbcTarget extends AbstractTarget {
 			throw e;
 		}
 	    return conn;
+	}
+
+
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((DB_URL == null) ? 0 : DB_URL.hashCode());
+		result = prime * result
+				+ ((JDBC_DRIVER == null) ? 0 : JDBC_DRIVER.hashCode());
+		result = prime * result + ((PASS == null) ? 0 : PASS.hashCode());
+		result = prime * result + ((USER == null) ? 0 : USER.hashCode());
+		return result;
+	}
+
+
+	/**
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AbstractJdbcTarget other = (AbstractJdbcTarget) obj;
+		if (DB_URL == null) {
+			if (other.DB_URL != null)
+				return false;
+		} else if (!DB_URL.equals(other.DB_URL))
+			return false;
+		if (JDBC_DRIVER == null) {
+			if (other.JDBC_DRIVER != null)
+				return false;
+		} else if (!JDBC_DRIVER.equals(other.JDBC_DRIVER))
+			return false;
+		if (PASS == null) {
+			if (other.PASS != null)
+				return false;
+		} else if (!PASS.equals(other.PASS))
+			return false;
+		if (USER == null) {
+			if (other.USER != null)
+				return false;
+		} else if (!USER.equals(other.USER))
+			return false;
+		return true;
 	}
 
 }

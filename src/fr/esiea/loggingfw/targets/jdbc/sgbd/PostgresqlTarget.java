@@ -14,7 +14,9 @@ public class PostgresqlTarget extends JdbcTarget{
 		createLogTable();
 	}
 	
-	
+	/**
+	 * Creation de la table de log spécifique à Postgresql
+	 */
 	public void createLogTable() {
 		
 		Connection conn = null;
@@ -25,7 +27,7 @@ public class PostgresqlTarget extends JdbcTarget{
 
 			if(!JdbcQuerys.tableExists(conn, "log"))
 				JdbcQuerys.executeUpdate(conn, "CREATE TABLE log "
-					+ "(id INT NOT NULL DEFAULT nextval('LogsSequence') PRIMARY KEY, "
+					+ "(id INT NOT NULL DEFAULT nextval('logs_sequence') PRIMARY KEY, "
 					+ "message VARCHAR(100), "
 					+ "source VARCHAR(100), "
 					+ "level INTEGER, "
@@ -38,7 +40,6 @@ public class PostgresqlTarget extends JdbcTarget{
 				try {
 					conn.close();
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					System.out.println(e.getMessage());
 				}
 			}
@@ -46,16 +47,24 @@ public class PostgresqlTarget extends JdbcTarget{
 		
 	}
 	
+	/**
+	 * Suppression de la table de log et de la sequence associée, puis re-création 
+	 */
 	public void resetDatabase() {
 		
 		Connection conn = null;
 		try {
 			conn = this.getConnection();
-			if(!JdbcQuerys.tableExists(conn, "log"))
+			if(JdbcQuerys.tableExists(conn, "log")){
 				JdbcQuerys.executeUpdate(conn, "DROP TABLE log;");
-			JdbcQuerys.executeUpdate(conn, "DROP SEQUENCE logs_sequence;");
+			}
+			if(JdbcQuerys.tableExists(conn, "logs_sequence")){
+				JdbcQuerys.executeUpdate(conn, "DROP SEQUENCE logs_sequence;");
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			createLogTable();
 		}
 		
 	}

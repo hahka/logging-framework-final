@@ -1,5 +1,6 @@
 package fr.esiea.loggingfw.log;
 
+import fr.esiea.loggingfw.format.LoggerFormatter;
 import fr.esiea.loggingfw.levels.LoggerLevel;
 
 public class Log {
@@ -21,6 +22,20 @@ public class Log {
 		this.message = pMessage;
 		this.date = pDate;
 	}
+
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		LoggerFormatter formatter = new LoggerFormatter();
+		if(date == null)
+			return formatter.format(name, level, message);
+		else
+			return formatter.format(name, level, message, date);
+	}
+	
+	
 	
 
 }

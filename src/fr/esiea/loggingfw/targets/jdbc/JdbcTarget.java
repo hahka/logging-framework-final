@@ -12,7 +12,6 @@ import fr.esiea.loggingfw.ReadPropertiesFile;
 import fr.esiea.loggingfw.format.LoggerFormatter;
 import fr.esiea.loggingfw.levels.LoggerLevel;
 import fr.esiea.loggingfw.log.Log;
-import fr.esiea.loggingfw.targets.AbstractTarget;
 
 public class JdbcTarget extends AbstractJdbcTarget {
 
@@ -40,7 +39,9 @@ public class JdbcTarget extends AbstractJdbcTarget {
 		
 	}
 
-	// Log en base de donnée
+	/** 
+	 * @see fr.esiea.loggingfw.targets.AbstractTarget#log(java.lang.String, fr.esiea.loggingfw.levels.LoggerLevel, java.lang.String, fr.esiea.loggingfw.format.LoggerFormatter)
+	 */
 	@Override
 	public void log(String pName, LoggerLevel pLevel, String pMessage, LoggerFormatter pFormatter) {
 
@@ -56,7 +57,9 @@ public class JdbcTarget extends AbstractJdbcTarget {
 		
 	}
 	
-	// Récupération des logs insérés en base de donnée
+	/** 
+	 * @see fr.esiea.loggingfw.targets.jdbc.AbstractJdbcTarget#getLogs()
+	 */
 	@Override
 	public ArrayList<Log> getLogs(){
 		
@@ -103,7 +106,9 @@ public class JdbcTarget extends AbstractJdbcTarget {
 	}
 
 	
-	// 
+	/**
+	 * @see fr.esiea.loggingfw.targets.jdbc.AbstractJdbcTarget#getConnection()
+	 */
 	public Connection getConnection() throws SQLException{
 		
 		Connection conn = null;

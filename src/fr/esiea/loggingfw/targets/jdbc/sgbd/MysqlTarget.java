@@ -12,7 +12,9 @@ public class MysqlTarget extends JdbcTarget{
 		super(pSgbd, pDbUrl, pUser, pPass);
 	}
 	
-
+	/**
+	 * Creation de la table log et du trigger associé pour la date, spécifique à MySql
+	 */
 	public void createLogTable() {
 		
 		Connection conn = null;
@@ -30,14 +32,13 @@ public class MysqlTarget extends JdbcTarget{
 			if(!JdbcQuerys.tableExists(conn, "log"))
 				JdbcQuerys.executeUpdate(conn, "CREATE TABLE log "
 					+ "(id INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,"
-					+ "message VARCHAR(100),"
+					+ "message VARCHAR(100), "
 					+ "source VARCHAR(100), "
 					+ "level INTEGER, "
 					+ "date DATETIME);");
 			
 				
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 	}
