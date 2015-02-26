@@ -18,13 +18,13 @@ public class JdbcTarget extends AbstractJdbcTarget {
 	public JdbcTarget() {
 		super();
 
-		ReadPropertiesFile confProperty = new ReadPropertiesFile();
+		/*ReadPropertiesFile confProperty = new ReadPropertiesFile();
 		confProperty.readProperties();
-		Properties confFile = confProperty.config;
+		Properties confFile = ReadPropertiesFile.config;
 		JDBC_DRIVER = confFile.getProperty("jdbc_driver");
 		DB_URL = confFile.getProperty("db_url");
 		USER = confFile.getProperty("user");
-		PASS = confFile.getProperty("pass");
+		PASS = confFile.getProperty("pass");*/
 
 	}
 
@@ -109,6 +109,7 @@ public class JdbcTarget extends AbstractJdbcTarget {
 	/**
 	 * @see fr.esiea.loggingfw.targets.jdbc.AbstractJdbcTarget#getConnection()
 	 */
+	@Override
 	public Connection getConnection() throws SQLException{
 		
 		Connection conn = null;

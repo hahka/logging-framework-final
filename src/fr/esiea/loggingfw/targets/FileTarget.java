@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import fr.esiea.loggingfw.ReadPropertiesFile;
+import fr.esiea.loggingfw.format.LoggerFormatter;
 import fr.esiea.loggingfw.levels.LoggerLevel;
 
 public class FileTarget extends AbstractTarget {
@@ -15,13 +16,13 @@ public class FileTarget extends AbstractTarget {
 	private long maxFileSize = 10000; //10000 octets by default
 
 	//private boolean activateRotation = getActivateFileRotation();
-	private boolean activateRotation = true;
+	private boolean activateRotation = false;
 	private String titleFile;
 	public File loggerFile;
 	SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd HH mm ss");
 
 	@Override
-	public void log(String pName, LoggerLevel level, String message) {
+	public void log(String pName, LoggerLevel level, String message, LoggerFormatter pFormatter) {
 		// TODO Auto-generated method stub
 		if(activateRotation){
 			if(titleFile == null)
@@ -39,8 +40,8 @@ public class FileTarget extends AbstractTarget {
 		}
 		else 
 		{
-			//loggerFile = new File(obtainLoggerFilePath());
-			loggerFile = new File("C:\\Users\\Marie\\Desktop\\logs.txt");
+			loggerFile = new File(obtainLoggerFilePath());
+			//loggerFile = new File("C:\\Users\\Marie\\Desktop\\logs.txt");
 		}
 		writeToLoggerFile(printLog(pName, level, message), loggerFile.getAbsolutePath());
 	}
@@ -81,14 +82,18 @@ public class FileTarget extends AbstractTarget {
 	}
 
 	public String obtainLoggerFilePath(){
+		System.out.println("1");
+		//ReadPropertiesFile rpf = new ReadPropertiesFile();
 		return ReadPropertiesFile.getProperty("logger.file.path");
 	}
 
 	public String getHomeFolderPath(){
+		//return new ReadPropertiesFile().getProperty("user.home");
 		return ReadPropertiesFile.getProperty("user.home");
 	}
 
 	public Boolean getActivateFileRotation(){
+		//return Boolean.parseBoolean(new ReadPropertiesFile().getProperty("activate.file.rotation"));
 		return Boolean.parseBoolean(ReadPropertiesFile.getProperty("activate.file.rotation"));
 	}
 
