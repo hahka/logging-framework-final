@@ -1,5 +1,6 @@
 package fr.esiea.loggingfw.targets.jdbc.sgbd;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
 import fr.esiea.loggingfw.targets.jdbc.JdbcQuerys;
@@ -13,17 +14,20 @@ public class PostgresqlTarget extends JdbcTarget{
 		createLogTable();
 	}
 	
-	
+	/**
+	 * Creation de la table de log spécifique à Postgresql
+	 */
 	public void createLogTable() {
 		
+		Connection conn = null;
 		try {
-			
-			if(!JdbcQuerys.tableExists(this.getConnection(), "log"))
-				JdbcQuerys.executeUpdate(this, "CREATE SEQUENCE logs_sequence;");
+			conn = this.getConnection();
+			if(!JdbcQuerys.tableExists(conn, "log"))
+				JdbcQuerys.executeUpdate(conn, "CREATE SEQUENCE logs_sequence;");
 
-			if(!JdbcQuerys.tableExists(this.getConnection(), "log"))
-				JdbcQuerys.executeUpdate(this, "CREATE TABLE log "
-					+ "(id INT NOT NULL DEFAULT nextval('LogsSequence') PRIMARY KEY, "
+			if(!JdbcQuerys.tableExists(conn, "log"))
+				JdbcQuerys.executeUpdate(conn, "CREATE TABLE log "
+					+ "(id INT NOT NULL DEFAULT nextval('logs_sequence') PRIMARY KEY, "
 					+ "message VARCHAR(100), "
 					+ "source VARCHAR(100), "
 					+ "level INTEGER, "
@@ -31,18 +35,36 @@ public class PostgresqlTarget extends JdbcTarget{
 				
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			if(conn != null){
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					System.out.println(e.getMessage());
+				}
+			}
 		}
 		
 	}
 	
+	/**
+	 * Suppression de la table de log et de la sequence associée, puis re-création 
+	 */
 	public void resetDatabase() {
 		
+		Connection conn = null;
 		try {
-			if(!JdbcQuerys.tableExists(this.getConnection(), "log"))
-				JdbcQuerys.executeUpdate(this, "DROP TABLE log;");
-			JdbcQuerys.executeUpdate(this, "DROP SEQUENCE logs_sequence;");
+			conn = this.getConnection();
+			if(JdbcQuerys.tableExists(conn, "log")){
+				JdbcQuerys.executeUpdate(conn, "DROP TABLE log;");
+			}
+			if(JdbcQuerys.tableExists(conn, "logs_sequence")){
+				JdbcQuerys.executeUpdate(conn, "DROP SEQUENCE logs_sequence;");
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			createLogTable();
 		}
 		
 	}

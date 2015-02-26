@@ -1,5 +1,6 @@
 package fr.esiea.loggingfw.targets.jdbc.sgbd;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
 import fr.esiea.loggingfw.targets.jdbc.JdbcQuerys;
@@ -11,30 +12,33 @@ public class MysqlTarget extends JdbcTarget{
 		super(pSgbd, pDbUrl, pUser, pPass);
 	}
 	
-
+	/**
+	 * Creation de la table log et du trigger associé pour la date, spécifique à MySql
+	 */
 	public void createLogTable() {
 		
+		Connection conn = null;
 		try {
-			JdbcQuerys.executeUpdate(this, "DROP TRIGGER log_date_trigger;");
+			conn = this.getConnection();
+			JdbcQuerys.executeUpdate(conn, "DROP TRIGGER log_date_trigger;");
 		
-			JdbcQuerys.executeUpdate(this, "CREATE TRIGGER log_date_trigger "
+			JdbcQuerys.executeUpdate(conn, "CREATE TRIGGER log_date_trigger "
 						+ "BEFORE INSERT ON log "
 						+ "FOR EACH ROW "
 						+ "BEGIN "
 						+ "SET NEW.date = NOW(); "
 						+ "END;");
 			
-			if(!JdbcQuerys.tableExists(this.getConnection(), "log"))
-				JdbcQuerys.executeUpdate(this, "CREATE TABLE log "
+			if(!JdbcQuerys.tableExists(conn, "log"))
+				JdbcQuerys.executeUpdate(conn, "CREATE TABLE log "
 					+ "(id INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,"
-					+ "message VARCHAR(100),"
+					+ "message VARCHAR(100), "
 					+ "source VARCHAR(100), "
 					+ "level INTEGER, "
 					+ "date DATETIME);");
 			
 				
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 	}
