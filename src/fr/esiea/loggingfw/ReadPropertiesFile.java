@@ -4,6 +4,9 @@ import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+/**
+ * Classe servant à récupérer des propriétés depuis le fichier config.properties
+ */
 public final class ReadPropertiesFile {
 	
 	/**

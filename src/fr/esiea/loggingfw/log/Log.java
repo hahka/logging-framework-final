@@ -3,6 +3,11 @@ package fr.esiea.loggingfw.log;
 import fr.esiea.loggingfw.format.LoggerFormatter;
 import fr.esiea.loggingfw.levels.LoggerLevel;
 
+/**
+ * Classe définissant l'objet Log<p> 
+ * Utile lors de la récupération des logs en base de donnée par exemple
+ *
+ */
 public class Log {
 	
 	private String name;

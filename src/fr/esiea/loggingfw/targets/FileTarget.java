@@ -11,6 +11,10 @@ import fr.esiea.loggingfw.ReadPropertiesFile;
 import fr.esiea.loggingfw.format.LoggerFormatter;
 import fr.esiea.loggingfw.levels.LoggerLevel;
 
+/**
+ * Classe pour logger dans un fichier<p>
+ * Possibilité de gérer les fichiers rotatifs
+ */
 public class FileTarget extends AbstractTarget {
 
 	private long maxFileSize = 10000; //10000 octets par défaut

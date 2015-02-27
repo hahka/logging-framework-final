@@ -6,6 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * Classe pour effectuer des mises à jour dans une table, <p>
+ * et pour vérifier si une table existe en base
+ *
+ */
 public class JdbcQuerys {
 
 	/**

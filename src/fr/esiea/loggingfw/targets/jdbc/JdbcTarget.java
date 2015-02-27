@@ -12,6 +12,10 @@ import fr.esiea.loggingfw.format.LoggerFormatter;
 import fr.esiea.loggingfw.levels.LoggerLevel;
 import fr.esiea.loggingfw.log.Log;
 
+/**
+ * Classe cible Jdbc de base. Gère les logs.
+ *
+ */
 public class JdbcTarget extends AbstractJdbcTarget {
 
 	public JdbcTarget() {

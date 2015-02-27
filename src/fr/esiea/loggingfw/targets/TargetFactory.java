@@ -2,6 +2,10 @@ package fr.esiea.loggingfw.targets;
 
 import fr.esiea.loggingfw.targets.jdbc.JdbcTarget;
 
+/**
+ * Classe pour optimiser et sécuriser la création de cibles
+ *
+ */
 public final class TargetFactory {
 
 	/**

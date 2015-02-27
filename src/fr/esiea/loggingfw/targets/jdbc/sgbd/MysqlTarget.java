@@ -6,6 +6,10 @@ import java.sql.SQLException;
 import fr.esiea.loggingfw.targets.jdbc.JdbcQuerys;
 import fr.esiea.loggingfw.targets.jdbc.JdbcTarget;
 
+/**
+ * Classe cible Jdbc spécifique à Mysql
+ *
+ */
 public class MysqlTarget extends JdbcTarget{
 
 	/**

@@ -7,6 +7,10 @@ import fr.esiea.loggingfw.targets.TargetFactory;
 import fr.esiea.loggingfw.format.LoggerFormatter;
 import fr.esiea.loggingfw.levels.LoggerLevel;
 
+/**
+ * Classe OurLogger<p>
+ * Classe de logger. C'est ici que sont gérer le niveau de priorité, les cibles et le formatter du logger.
+ */
 public class OurLogger {
 	
 	/**

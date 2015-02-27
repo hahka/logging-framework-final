@@ -12,18 +12,25 @@ import fr.esiea.loggingfw.targets.AbstractTarget;
  * Classe AbstractJdbcTarget<p>
  * Classe abstraite de base pour les cibles utilisant JDBC (base de données).<p>
  * Pour créer de nouvelles cibles utilisant JDBC, elles doivent hériter de cette classe.<p>
- * params:<p>
- * 	JDBC_DRIVER : driver jdbc utilisé suivant que l'on utilise Postgresql, Mysql...<p>
- * 	DB_URL : url de la base de données<p>
- * 	USER : identifiant de l'utilisateur<p>
- * 	PASS : mot de passe pour accéder à la base de données (optionnel)
  */
 public abstract class AbstractJdbcTarget extends AbstractTarget {
 
 	// Paramètres nécessaires à une connection à un sgbd
+	/**
+	 * Driver jdbc utilisé suivant que l'on utilise Postgresql, Mysql...<p>
+	 */
 	protected String JDBC_DRIVER = null;
+	/**
+	 * Url de la base de données
+	 */
 	protected String DB_URL = null;
+	/**
+	 * Identifiant de l'utilisateur
+	 */
 	protected String USER = null;
+	/**
+	 * Mot de passe pour accéder à la base de données
+	 */
 	protected String PASS = null;
 
 	

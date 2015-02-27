@@ -7,6 +7,9 @@ import java.util.Date;
 import fr.esiea.loggingfw.format.LoggerFormatter;
 import fr.esiea.loggingfw.levels.LoggerLevel;
 
+/**
+ * Classe pour logger en console
+ */
 public class ConsoleTarget extends AbstractTarget {
 	
 	public ConsoleTarget(){

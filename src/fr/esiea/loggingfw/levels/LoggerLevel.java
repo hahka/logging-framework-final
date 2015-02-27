@@ -1,5 +1,9 @@
 package fr.esiea.loggingfw.levels;
 
+/**
+ * Enumération pour les différents niveaux de priotité du logger
+ *
+ */
 public enum LoggerLevel {
 	DEBUG("DEBUG"), 
 	INFO("INFO"), 
