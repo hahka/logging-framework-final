@@ -78,8 +78,8 @@ public class FileTarget extends AbstractTarget {
 	}
 
 	/**
-	 * @param log : le contenu du log
-	 * @param filepath : le chemin du fichier dans lequel nous allons logger
+	 * @param log le contenu du log
+	 * @param filepath le chemin du fichier dans lequel nous allons logger
 	 */
 	private void writeToLoggerFile(String log, String filepath){
 		if(filepath == null){
@@ -160,7 +160,7 @@ public class FileTarget extends AbstractTarget {
 	}
 
 	/**
-	 * @param loggerFilePath : le chemin du fichier de log désiré
+	 * @param loggerFilePath le chemin du fichier de log désiré
 	 */
 	public void setLoggerFile(String loggerFilePath) {
 		File f = new File(loggerFilePath);

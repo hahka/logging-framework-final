@@ -6,7 +6,10 @@ import java.util.ResourceBundle;
 
 public final class ReadPropertiesFile {
 	
-	private static String CONFIG_FILENAME = "resources/config"; //$NON-NLS-1$
+	/**
+	 * Chemin du fichier de configuration
+	 */
+	private static String CONFIG_FILENAME = "resources/config";
 	private static Locale currentLang = Locale.FRANCE;
 	public static ResourceBundle config = loadProperties();
 

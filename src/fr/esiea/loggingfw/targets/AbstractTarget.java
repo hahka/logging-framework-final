@@ -10,14 +10,17 @@ import fr.esiea.loggingfw.levels.LoggerLevel;
  */
 public abstract class AbstractTarget {
 
+	/**
+	 * Sert à comparer deux cibles entre elles (principalement les consoles et les fichiers)
+	 */
 	protected String targetType;
 	
 	/**
-	 * log : Seule fonction réellement utile à toutes les cibles, celle effectuant le log 
-	 * @param name : nom (source) du logger
-	 * @param level : niveau de priorité des logs (DEBUG, INFO, ERREUR)
-	 * @param message : le message qui va être loggé
-	 * @param formatter : la mise en forme du message
+	 * Seule fonction réellement utile à toutes les cibles, celle effectuant le log 
+	 * @param name Nom (source) du logger
+	 * @param level Niveau de priorité des logs (DEBUG, INFO, ERREUR)
+	 * @param message Le message qui va être loggé
+	 * @param formatter La mise en forme du message
 	 */
 	public abstract void log(String name, LoggerLevel level, String message, LoggerFormatter formatter);
 

@@ -5,7 +5,7 @@ import fr.esiea.loggingfw.targets.jdbc.JdbcTarget;
 public final class TargetFactory {
 
 	/**
-	 * @param param : paramètre servant à désigner le type de cible souhaitée pour le logger (console, jdbc, file par exemple)
+	 * @param param Paramètre servant à désigner le type de cible souhaitée pour le logger (console, jdbc, file par exemple)
 	 * @return La cible correspondant au choix de l'utilisateur
 	 */
 	public static AbstractTarget getTarget(String param)

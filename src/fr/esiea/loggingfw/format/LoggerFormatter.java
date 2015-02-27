@@ -8,9 +8,9 @@ import fr.esiea.loggingfw.levels.LoggerLevel;
 public class LoggerFormatter {
 	
 	/**
-	 * @param pName : nom du logger (source, permet d'identifier le logger)
-	 * @param pLevel : niveau de priorité du logger
-	 * @param pMessage : message à logger
+	 * @param pName nom du logger (source, permet d'identifier le logger)
+	 * @param pLevel niveau de priorité du logger
+	 * @param pMessage message à logger
 	 * @return Les informations du log mises en forme
 	 */
 	public String format(String pName, LoggerLevel pLevel, String pMessage){
@@ -23,10 +23,10 @@ public class LoggerFormatter {
 	}
 	
 	/**
-	 * @param pName : nom du logger (source, permet d'identifier le logger)
-	 * @param pLevel : niveau de priorité du logger
-	 * @param pMessage : message à logger
-	 * @param pDate : date à laquelle le log a été effectué
+	 * @param pName nom du logger (source, permet d'identifier le logger)
+	 * @param pLevel niveau de priorité du logger
+	 * @param pMessage message à logger
+	 * @param pDate date à laquelle le log a été effectué
 	 * @return Les informations du log mises en forme
 	 */
 	public String format(String pName, LoggerLevel pLevel, String pMessage, String pDate){
