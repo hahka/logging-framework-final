@@ -24,7 +24,7 @@ public class ConsoleTarget extends AbstractTarget {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = new Date();
 		String dateString = dateFormat.format(date);
-		pFormatter.format(pName, pLevel, pMessage, dateString);
+		System.out.println(pFormatter.format(pName, pLevel, pMessage, dateString));
 		
 	}
 
