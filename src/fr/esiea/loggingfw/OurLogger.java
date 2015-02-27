@@ -191,6 +191,14 @@ public class OurLogger {
 	public void removeTarget(AbstractTarget target){
 		this.target.remove(target);
 	}
+	
+	/**
+	 * Modifie le formatter associé au logger
+	 * @param pFormatter Nouveau formatter pour afficher les logs
+	 */
+	public void setFormatter(LoggerFormatter pFormatter){
+		this.formatter = pFormatter;
+	}
 
 }
 
