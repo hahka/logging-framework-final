@@ -13,17 +13,23 @@ import fr.esiea.loggingfw.levels.LoggerLevel;
 
 public class FileTarget extends AbstractTarget {
 
-	private long maxFileSize = 10000; //10000 octets by default
+	private long maxFileSize = 10000; //10000 octets par défaut
 
-	//private boolean activateRotation = getActivateFileRotation();
-	private boolean activateRotation = false;
+	private boolean activateRotation = getFileRotationProperty();
 	private String titleFile;
-	public File loggerFile;
-	SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd HH mm ss");
+	private File loggerFile;
+	
+	/**
+	 * Pour forcer le fichier à se réécrire si on a choisit le mode rotatif, plutot que de créer un autre fichier.<p>
+	 * Seulement lorsque le nom du fichier a été choisit par l'utilisateur.
+	 */
+	private boolean filePathSetManually = false;
+	
+	SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd HH_mm_ss");
 
 	@Override
 	public void log(String pName, LoggerLevel level, String message, LoggerFormatter pFormatter) {
-		// TODO Auto-generated method stub
+
 		if(activateRotation){
 			if(titleFile == null)
 			{
@@ -32,7 +38,11 @@ public class FileTarget extends AbstractTarget {
 			if(loggerFile != null){
 				long sizeFile = loggerFile.length();
 				if(sizeFile > maxFileSize){
-					createNewLoggerFile();			
+					if(!filePathSetManually)
+						createNewLoggerFile();
+					else
+						loggerFile.delete();
+						
 				}
 			}
 			loggerFile = new File(titleFile);
@@ -40,28 +50,40 @@ public class FileTarget extends AbstractTarget {
 		}
 		else 
 		{
-			loggerFile = new File(obtainLoggerFilePath());
-			//loggerFile = new File("C:\\Users\\Marie\\Desktop\\logs.txt");
+			try{
+				loggerFile = new File(getLoggerFilePath());
+			} catch (NullPointerException npe) {
+				createNewLoggerFile();
+				loggerFile = new File(titleFile);
+			}
 		}
 		writeToLoggerFile(printLog(pName, level, message), loggerFile.getAbsolutePath());
 	}
 
+	
 	private String printLog(String pName, LoggerLevel level, String message){
 		return "[NAME:"+pName+
-				" LEVEL:"+level.name()+
-				" MESSAGE:"+message+"]\n";
+				" \tLEVEL:"+level.name()+
+				" \tMESSAGE:"+message+"]\n";
 
 	}
 	
 	private void createNewLoggerFile(){
 		Date date = new Date();
 		String titleDate = dt.format(date);
-		titleFile = titleDate  +".txt";
+		File f = new File(titleDate+".txt");
+		if(f.exists())
+			titleDate = new SimpleDateFormat("yyyy-MM-dd HH_mm_ss.SSS").format(date);
+		titleFile = titleDate+".txt";
 	}
 
+	/**
+	 * @param log : le contenu du log
+	 * @param filepath : le chemin du fichier dans lequel nous allons logger
+	 */
 	private void writeToLoggerFile(String log, String filepath){
 		if(filepath == null){
-			filepath = getHomeFolderPath() + File.separator + "Documents" + File.separator + "log.txt";
+			filepath = getHomeFolderPathProperty() + File.separator + "Documents" + File.separator + "log.txt";
 			System.out.println(filepath);
 		}	
 		try {
@@ -73,28 +95,52 @@ public class FileTarget extends AbstractTarget {
 			BufferedWriter bw = new BufferedWriter(fw);
 			bw.write(log);
 			bw.close();	
-			System.out.println(loggerFile.getAbsolutePath());
-			System.out.println("Log wrote");
+			System.out.println("Log : "+loggerFile.getAbsolutePath());
 		}
 		catch(IOException e){
 			e.printStackTrace();
 		}
 	}
 
-	public String obtainLoggerFilePath(){
-		System.out.println("1");
-		//ReadPropertiesFile rpf = new ReadPropertiesFile();
-		return ReadPropertiesFile.getProperty("logger.file.path");
+	/**
+	 * Renvoie le nom du fichier de log s'il existe, en crée un sinon à partir du fichier properties
+	 * @return Le nom du fichier de log
+	 * @throws NullPointerException : fichier de config non trouvé
+	 */
+	public String getLoggerFilePath() throws NullPointerException{
+		
+		if(titleFile == null){
+			try{
+				titleFile = getLoggerFilePathProperty();
+			} catch (NullPointerException npe) {
+				throw npe;
+			} 
+		}
+		return titleFile;
 	}
 
-	public String getHomeFolderPath(){
-		//return new ReadPropertiesFile().getProperty("user.home");
+	/**
+	 * @return Le nom du fichier de log renseigné dans le fichier properties.
+	 * @throws NullPointerException : fichier de config non trouvé
+	 */
+	public String getLoggerFilePathProperty() throws NullPointerException{
+		
+		String property = null;
+		try{
+			property = ReadPropertiesFile.getProperty("logger.file.path"); 
+		} catch (NullPointerException npe) {
+			throw npe;
+		} 
+		return property;
+	}
+
+
+	public String getHomeFolderPathProperty(){
 		return ReadPropertiesFile.getProperty("user.home");
 	}
 
-	public Boolean getActivateFileRotation(){
-		//return Boolean.parseBoolean(new ReadPropertiesFile().getProperty("activate.file.rotation"));
-		return Boolean.parseBoolean(ReadPropertiesFile.getProperty("activate.file.rotation"));
+	public Boolean getFileRotationProperty(){
+		return ReadPropertiesFile.getBooleanProperty("activate.file.rotation");
 	}
 
 	public void setMaxFileSize(long maxFileSize) {
@@ -104,6 +150,25 @@ public class FileTarget extends AbstractTarget {
 	public void setActivateRotation(boolean activateRotation) {
 		this.activateRotation = activateRotation;
 	}
+	
+
+	/**
+	 * @return the loggerFile
+	 */
+	public File getLoggerFile() {
+		return loggerFile;
+	}
+
+	/**
+	 * @param loggerFilePath : le chemin du fichier de log désiré
+	 */
+	public void setLoggerFile(String loggerFilePath) {
+		File f = new File(loggerFilePath);
+		this.titleFile = loggerFilePath;
+		this.loggerFile = f;
+		this.filePathSetManually = true;
+	}
+
 
 
 }

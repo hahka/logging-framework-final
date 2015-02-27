@@ -1,2 +1,0 @@
-[NAME:fr.esiea.main.Main LEVEL:DEBUG MESSAGE:test]
-[NAME:fr.esiea.main.Main LEVEL:DEBUG MESSAGE:test]

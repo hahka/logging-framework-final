@@ -9,12 +9,12 @@ import fr.esiea.loggingfw.levels.LoggerLevel;
 
 
 /**
- * Classe OurLogger
- * Classe principale du logger
- * params:
- * 	name : pour différencier les différents logs. Généralement la source du log
- * 	level : le niveau de log (debug, error...)
- * 	target : la liste des cibles on va vouloir logger
+ * Classe OurLogger<p>
+ * Classe principale du logger<p>
+ * params:<p>
+ * 	name : pour différencier les différents logs. Généralement la source du log<p>
+ * 	level : le niveau de log (debug, error...)<p>
+ * 	target : la liste des cibles on va vouloir logger<p>
  * 	formatter : formatter utilisé pour mettre en forme les logs
  */
 public class OurLogger {
@@ -34,7 +34,7 @@ public class OurLogger {
 		
 	}
 	
-	public OurLogger(Class pClass){
+	public OurLogger(Class<?> pClass){
 		
 		this.name = pClass.getCanonicalName();
 		this.level = LoggerLevel.ERROR;
@@ -119,7 +119,7 @@ public class OurLogger {
 	}
 	
 	/**
-	 * Ajout d'une cible seulement si elle n'est pas déjà présente
+	 * Ajout d'une cible seulement si elle n'est pas déjà présente<p>
 	 * Utilise les .equals surchargés pour tester la présence
 	 * @param pTarget : AstractTarget à ajouter au logger
 	 */
@@ -129,7 +129,7 @@ public class OurLogger {
 	}
 
 	/**
-	 * Ajout d'une cible seulement si elle n'est pas déjà présente
+	 * Ajout d'une cible (par son nom) seulement si elle n'est pas déjà présente<p>
 	 * Utilise les .equals surchargés pour tester la présence
 	 * @param pTarget : String utilisée par le TargetFactory pour ajouter au logger une cible
 	 */
@@ -148,6 +148,7 @@ public class OurLogger {
 	
 	/**
 	 * Enlève la cible passée en paramètre
+	 * @param target : cible à enlever
 	 */
 	public void removeTarget(AbstractTarget target){
 		this.target.remove(target);

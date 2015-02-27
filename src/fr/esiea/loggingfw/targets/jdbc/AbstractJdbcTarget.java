@@ -8,14 +8,14 @@ import java.util.ArrayList;
 import fr.esiea.loggingfw.log.Log;
 import fr.esiea.loggingfw.targets.AbstractTarget;
 
-/* 
- * Classe AbstractJdbcTarget
- * Classe abstraite de base pour les cibles utilisant JDBC (base de données).
- * Pour créer de nouvelles cibles utilisant JDBC, elles doivent hériter de cette classe.
- * params:
- * 	JDBC_DRIVER : driver jdbc utilisé suivant que l'on utilise Postgresql, Mysql...
- * 	DB_URL : url de la base de données
- * 	USER : identifiant de l'utilisateur
+/** 
+ * Classe AbstractJdbcTarget<p>
+ * Classe abstraite de base pour les cibles utilisant JDBC (base de données).<p>
+ * Pour créer de nouvelles cibles utilisant JDBC, elles doivent hériter de cette classe.<p>
+ * params:<p>
+ * 	JDBC_DRIVER : driver jdbc utilisé suivant que l'on utilise Postgresql, Mysql...<p>
+ * 	DB_URL : url de la base de données<p>
+ * 	USER : identifiant de l'utilisateur<p>
  * 	PASS : mot de passe pour accéder à la base de données (optionnel)
  */
 public abstract class AbstractJdbcTarget extends AbstractTarget {
@@ -50,7 +50,7 @@ public abstract class AbstractJdbcTarget extends AbstractTarget {
 	public void setPass(String pPass) { PASS = pPass; }
 
 	/**
-	 * Fonction appelée avant charque requète.
+	 * Fonction appelée avant charque requète.<p>
 	 * A fermer une fois la requète exécutée.
 	 * @return La connexion avec le sgbd
 	 * @throws SQLException : l'un des paramètres est null, il manque le mot de passe, etc...

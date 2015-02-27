@@ -8,6 +8,12 @@ import fr.esiea.loggingfw.targets.jdbc.JdbcTarget;
 
 public class MysqlTarget extends JdbcTarget{
 
+	/**
+	 * @param pSgbd : driver jdbc
+	 * @param pDbUrl : url de la base de donnée
+	 * @param pUser : utilisateur
+	 * @param pPass : mot de passe
+	 */
 	public MysqlTarget(String pSgbd, String pDbUrl, String pUser, String pPass){
 		super(pSgbd, pDbUrl, pUser, pPass);
 	}

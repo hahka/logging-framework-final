@@ -1,0 +1,7 @@
+fr.esiea.loggingfw
+fr.esiea.loggingfw.format
+fr.esiea.loggingfw.levels
+fr.esiea.loggingfw.log
+fr.esiea.loggingfw.targets
+fr.esiea.loggingfw.targets.jdbc
+fr.esiea.loggingfw.targets.jdbc.sgbd

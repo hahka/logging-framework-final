@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Properties;
 
 import fr.esiea.loggingfw.ReadPropertiesFile;
 import fr.esiea.loggingfw.format.LoggerFormatter;
@@ -18,13 +17,10 @@ public class JdbcTarget extends AbstractJdbcTarget {
 	public JdbcTarget() {
 		super();
 
-		/*ReadPropertiesFile confProperty = new ReadPropertiesFile();
-		confProperty.readProperties();
-		Properties confFile = ReadPropertiesFile.config;
-		JDBC_DRIVER = confFile.getProperty("jdbc_driver");
-		DB_URL = confFile.getProperty("db_url");
-		USER = confFile.getProperty("user");
-		PASS = confFile.getProperty("pass");*/
+		JDBC_DRIVER = ReadPropertiesFile.getProperty("jdbc_driver");
+		DB_URL = ReadPropertiesFile.getProperty("db_url");
+		USER = ReadPropertiesFile.getProperty("user");
+		PASS = ReadPropertiesFile.getProperty("pass");
 
 	}
 

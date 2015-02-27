@@ -47,7 +47,7 @@ public class JdbcQuerys {
 	 * @param connection : la connexion à la base de donnée
 	 * @param nomTable : le nom de la table dont on vérifie l'existence 
 	 * @return true si la table existe, false sinon
-	 * @throws SQLException
+	 * @throws SQLException : erreur SQL
 	 */
 	public static boolean tableExists(Connection connection, String nomTable)
 			throws SQLException {

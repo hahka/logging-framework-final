@@ -4,8 +4,8 @@ import fr.esiea.loggingfw.format.LoggerFormatter;
 import fr.esiea.loggingfw.levels.LoggerLevel;
 
 /** 
- * Classe AbstractTarget
- * Classe abstraite de base pour les cibles.
+ * Classe AbstractTarget<p>
+ * Classe abstraite de base pour les cibles.<p>
  * Pour créer de nouvelles cibles, elles doivent hériter de cette classe.
  */
 public abstract class AbstractTarget {
