@@ -7,7 +7,7 @@ Lien vers la JavaDoc de notre projet : [ici](http://logging-framework.herokuapp.
 
 ## Instructions d'installation
 
-- Téléchargez le fichier logging-framework.jar
+- Téléchargez le fichier [logging-framework.jar](https://github.com/hahka/logging-framework-final/blob/master/logging-framework.jar)
 - Ajoutez le à votre projet java (dans un dossier 'lib' par exemple)
 - Ajoutez le ensuite au BuildPath de votre projet
 
@@ -62,3 +62,8 @@ JdbcTarget possède aussi un constructeur sans paramètre. Les 4 String vont alo
 
 Enfin, les cibles ConsoleTarget et FileTarget permettent de logger respectivement en console et dans un fichier (de type rotatif ou non).
   
+## Credits
+
+Marie Dagniau - mdagniau<p>
+Paul-Henri Guenarg - phguenard<p>
+Thibaut Virolle - hahka
