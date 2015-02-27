@@ -55,7 +55,7 @@ public class OurLogger {
 	}
 
 	/**
-	 * @see fr.esiea.loggingfw.OurLogger#debug()
+	 * @see #debug(String)
 	 * @param pMessage Message à logger
 	 */
 	public void d(String pMessage) { debug(pMessage); }
@@ -71,7 +71,7 @@ public class OurLogger {
 	}
 
 	/**
-	 * @see fr.esiea.loggingfw.OurLogger#error()
+	 * @see #error(String)
 	 * @param pMessage Message à logger
 	 */
 	public void e(String pMessage) { error(pMessage); }
@@ -87,7 +87,7 @@ public class OurLogger {
 	}
 
 	/**
-	 * @see fr.esiea.loggingfw.OurLogger#info()
+	 * @see #info(String)
 	 * @param pMessage Message à logger
 	 */
 	public void i(String pMessage) { info(pMessage); }
